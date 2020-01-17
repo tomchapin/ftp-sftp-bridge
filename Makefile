@@ -21,7 +21,7 @@ logs:
 	docker-compose logs -f
 
 clean:
-	docker volume rm ftp-sftp-bridge_sshfs_integration
+	docker volume rm ftp-sftp-bridge_sshfs_user1 && docker volume rm ftp-sftp-bridge_sshfs_user2
 
 shell:
 	docker exec -it ftp-sftp-bridge /bin/sh
