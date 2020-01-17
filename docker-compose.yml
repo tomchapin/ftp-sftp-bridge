@@ -1,0 +1,48 @@
+version: "3"
+services:
+  ftp-sftp-bridge:
+    image: delfer/alpine-ftp-server
+    container_name: ftp-sftp-bridge
+    volumes:
+      - ./config/vsftpd.conf/:/etc/vsftpd/vsftpd.conf
+      - "sshfs_user1:/ftp/user1:rw"
+      - "sshfs_user2:/ftp/user2:rw"
+    restart: always
+    ports:
+      - "21:21"
+      - "21000-21010:21000-21010"
+    env_file:
+        - ./.env
+
+volumes:
+  sshfs_user1:
+    driver: vieux/sshfs:latest
+    driver_opts:
+      sshcmd: "remote_ssh_user1@remote-server-name:/remote/server/path"
+      IdentityFile: "/root/.ssh/remote_ssh_user1.pem"
+      transform_symlinks: ""
+      follow_symlinks: ""
+      allow_other: ""
+      reconnect: ""
+      StrictHostKeyChecking: "no"
+      kernel_cache: ""
+      cache: "no"
+      auto_cache: ""
+      big_writes: ""
+      compression: "no"
+
+  sshfs_user2:
+    driver: vieux/sshfs:latest
+    driver_opts:
+      sshcmd: "remote_ssh_user2@remote-server-name:/remote/server/path"
+      IdentityFile: "/root/.ssh/remote_ssh_user2.pem"
+      transform_symlinks: ""
+      follow_symlinks: ""
+      allow_other: ""
+      reconnect: ""
+      StrictHostKeyChecking: "no"
+      kernel_cache: ""
+      cache: "no"
+      auto_cache: ""
+      big_writes: ""
+      compression: "no"
